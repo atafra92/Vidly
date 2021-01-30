@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataProcessor;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,20 +10,17 @@ namespace Vidly_MVCApp.Controllers
 {
     public class MovieController : Controller
     {
-        private List<Movie> ListMovies()
-        {
-            var movies = new List<Movie>
-            {
-                new Movie { Id = 1, Title = "Star Wars VI - Return of the Jedi" },
-                new Movie { Id = 2, Title = "Star Wars V - The Empire Strikes Back" }
-            };
+        private readonly IMovieEndpoint _movieEndpoint;
 
-            return movies;
+        public MovieController(IMovieEndpoint movieEndpoint)
+        {
+            _movieEndpoint = movieEndpoint;
         }
+
         //GET: Movies
         public IActionResult GetMovies()
         {
-            var movies = ListMovies();
+            var movies = _movieEndpoint.GetAll();
 
             return View(movies);
         }
@@ -34,7 +32,12 @@ namespace Vidly_MVCApp.Controllers
                 return NotFound();
             }
 
-            var movie = ListMovies().FirstOrDefault(m => m.Id == id);
+            var movie = _movieEndpoint.GetMovieById(id);
+
+            if(movie == null)
+            {
+                return NotFound();
+            }
 
             return View(movie);
         }

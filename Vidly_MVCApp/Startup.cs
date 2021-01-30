@@ -1,3 +1,5 @@
+using DataProcessor;
+using DataProcessor.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,10 +32,19 @@ namespace Vidly_MVCApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<VidlyDbContext>(options =>
+                options.UseSqlServer(
+                  Configuration.GetConnectionString("VidlyDb")));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            //personal services
+            services.AddTransient<ICustomerEndpoints, CustomerEndpoints>();
+            services.AddTransient<IMovieEndpoint, MovieEndpoint>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
