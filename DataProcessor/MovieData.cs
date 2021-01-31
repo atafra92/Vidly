@@ -8,10 +8,10 @@ using System.Text;
 
 namespace DataProcessor
 {
-    public class MovieEndpoint : IMovieEndpoint
+    public class MovieData : IMovieData
     {
         private VidlyDbContext _context;
-        public MovieEndpoint(VidlyDbContext context)
+        public MovieData(VidlyDbContext context)
         {
             _context = context;
         }

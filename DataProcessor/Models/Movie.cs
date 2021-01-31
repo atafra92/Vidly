@@ -14,19 +14,14 @@ namespace DataProcessor.Models
         public string Title { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Release Date")]
+        [DataType(DataType.Date)]     
         public DateTime ReleaseDate { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Date Added")]
+        [DataType(DataType.Date)]  
         public DateTime DateAdded { get; set; } = DateTime.UtcNow;
 
-        [Required]
-        [Display(Name = "Number in Stock")]
+        [Required]     
         public int NumberInStock { get; set; }
 
         public Genre Genres { get; set; }

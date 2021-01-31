@@ -1,4 +1,5 @@
-﻿using DataProcessor;
+﻿using AutoMapper;
+using DataProcessor;
 using DataProcessor.DataAccess;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,19 +15,23 @@ namespace Vidly_MVCApp.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ICustomerEndpoints _customerEndpoints;
+        private readonly ICustomerData _customerData;
+        private readonly IMembershipTypeData _membershipTypeData;
+        private readonly IMapper _mapper;
 
-        public CustomerController(ICustomerEndpoints customerEndpoints)
+        public CustomerController(ICustomerData customerData, IMembershipTypeData membershipTypeData, IMapper mapper)
         {
-            _customerEndpoints = customerEndpoints;
+            _customerData = customerData;
+            _membershipTypeData = membershipTypeData;
+            _mapper = mapper;
         }
 
         public IActionResult GetCustomers()
         {
+            var viewModel = new GetCustomersViewModel(_customerData, _mapper);
+            viewModel.LoadCustomers();
 
-            var customers = _customerEndpoints.GetAll();
-
-            return View(customers);
+            return View(viewModel.Customers.ToList());
         }
     
         public IActionResult Details(int? id)
@@ -36,34 +41,47 @@ namespace Vidly_MVCApp.Controllers
                 return NotFound();
             }
 
-            var customer = _customerEndpoints.GetCustomerById(id);
+            var viewModel = new GetCustomersViewModel(_customerData, _mapper);
+            viewModel.GetCostumerById(id);
+
+            var customer = viewModel.Customer;
 
             if (customer == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(viewModel.Customer);
         }
      
+        [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var viewModel = new LoadMembershipTypesViewModel(_membershipTypeData, _mapper);
+
+            viewModel.LoadCustomerWithMembershipTypes();
+
+            return View(viewModel);
         }
 
-    
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(IFormCollection collection)
+        public IActionResult Create(CustomerDto customer)
         {
-            try
+            if(!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var viewModel = new LoadMembershipTypesViewModel(_membershipTypeData, _mapper)
+                {
+                    Customer = customer
+                };
+                viewModel.LoadCustomerWithMembershipTypes();
+                return View(viewModel);
             }
-            catch
-            {
-                return View();
-            }
+
+            var saveCustomer = new SaveCustomerViewModel(_customerData, _mapper);
+            saveCustomer.SaveCustomer(customer);
+
+            return RedirectToAction(nameof(GetCustomers));
         }
 
       

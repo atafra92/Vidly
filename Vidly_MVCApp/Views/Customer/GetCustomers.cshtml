@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataProcessor.Models.Customer>
+﻿@model IEnumerable<Vidly_MVCApp.Models.CustomerDto>
 
 @{
     ViewData["Title"] = "GetCustomers";
@@ -6,9 +6,9 @@
 
 <h1>List of Customers</h1>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
+<p>
+    <a asp-action="Create">Create Customer</a>
+</p>
 <table class="table">
     <thead>
         <tr>

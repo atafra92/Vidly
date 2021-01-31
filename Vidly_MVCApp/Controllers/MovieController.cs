@@ -10,17 +10,17 @@ namespace Vidly_MVCApp.Controllers
 {
     public class MovieController : Controller
     {
-        private readonly IMovieEndpoint _movieEndpoint;
+        private readonly IMovieData _movieData;
 
-        public MovieController(IMovieEndpoint movieEndpoint)
+        public MovieController(IMovieData movieData)
         {
-            _movieEndpoint = movieEndpoint;
+            _movieData = movieData;
         }
 
         //GET: Movies
         public IActionResult GetMovies()
         {
-            var movies = _movieEndpoint.GetAll();
+            var movies = _movieData.GetAll();
 
             return View(movies);
         }
@@ -32,7 +32,7 @@ namespace Vidly_MVCApp.Controllers
                 return NotFound();
             }
 
-            var movie = _movieEndpoint.GetMovieById(id);
+            var movie = _movieData.GetMovieById(id);
 
             if(movie == null)
             {

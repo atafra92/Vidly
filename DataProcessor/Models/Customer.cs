@@ -12,11 +12,10 @@ namespace DataProcessor.Models
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
+      
         public bool IsSubsribedToNewsLetter { get; set; }
-
-        [Display(Name = "Date of Birth")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+      
+        [DataType(DataType.DateTime)] 
         public DateTime? BirthDate { get; set; }  
 
         //navigation property

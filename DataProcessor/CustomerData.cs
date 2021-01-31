@@ -8,18 +8,18 @@ using System.Text;
 
 namespace DataProcessor
 {
-    public class CustomerEndpoints : ICustomerEndpoints
+    public class CustomerData : ICustomerData
     {
         private VidlyDbContext _context;
-        public CustomerEndpoints(VidlyDbContext context)
+        public CustomerData(VidlyDbContext context)
         {
             _context = context;
         }
-        public List<Customer> GetAll()
+        public IEnumerable<Customer> GetAll()
         {
-            var customers = _context.Customers.Include(c => c.MembershipTypes).ToList();
+            var Customers = _context.Customers.Include(c => c.MembershipTypes).ToList();
 
-            return customers;
+            return Customers;
 
         }
         public Customer GetCustomerById(int? id)
@@ -30,6 +30,13 @@ namespace DataProcessor
                 .SingleOrDefault();
 
             return customer;
+        }
+
+        public void CreateNew(Customer customer)    
+        {
+            _context.Add(customer);
+            _context.SaveChanges();
+
         }
     }
 }

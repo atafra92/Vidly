@@ -10,7 +10,6 @@ namespace DataProcessor.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Genre")]
         [StringLength(100)]
         public string Name { get; set; }
 

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace DataProcessor
 {
-    public interface IMovieEndpoint
+    public interface IMembershipTypeData
     {
-        List<Movie> GetAll();
-        Movie GetMovieById(int? id);
+        List<MembershipType> GetAll();
     }
 }

@@ -1,3 +1,4 @@
+using AutoMapper;
 using DataProcessor;
 using DataProcessor.DataAccess;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vidly_MVCApp.Data;
+using Vidly_MVCApp.Mappings;
 
 namespace Vidly_MVCApp
 {
@@ -43,8 +45,20 @@ namespace Vidly_MVCApp
             services.AddRazorPages();
 
             //personal services
-            services.AddTransient<ICustomerEndpoints, CustomerEndpoints>();
-            services.AddTransient<IMovieEndpoint, MovieEndpoint>();
+            services.AddTransient<ICustomerData, CustomerData>();
+            services.AddTransient<IMovieData, MovieData>();
+            services.AddTransient<IMembershipTypeData, MembershipTypeData>();
+
+            //configuring Automapper
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+
+            services.AddSingleton(mapper);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

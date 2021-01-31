@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace DataProcessor
 {
-    public interface ICustomerEndpoints
+    public interface ICustomerData
     {
-        List<Customer> GetAll();
+        IEnumerable<Customer> GetAll();
         Customer GetCustomerById(int? id);
+        void CreateNew(Customer customer);
     }
 }
