@@ -25,11 +25,31 @@ namespace DataProcessor
         public Movie GetMovieById(int? id)
         {
             var movie = _context.Movies
-                .Include(c => c.Genres)
-                .Where(c => c.Id == id)
+                .Include(m => m.Genres)
+                .Where(m => m.Id == id)
                 .SingleOrDefault();
 
             return movie;
+        }
+
+        public void CreateNew(Movie movie)
+        {
+            _context.Add(movie);
+            _context.SaveChanges();
+        }
+
+        public Movie EditMovieById(int? id)
+        {
+            var movie = _context.Movies
+                .SingleOrDefault(m => m.Id == id);
+
+            return movie;
+        }
+
+        public void SaveEdits(Movie movie)
+        {
+            _context.Entry(movie).State = EntityState.Modified;
+            _context.SaveChanges();
         }
     }
 }

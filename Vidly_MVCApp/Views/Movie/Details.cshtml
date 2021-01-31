@@ -1,4 +1,4 @@
-﻿@model DataProcessor.Models.Movie
+﻿@model Vidly_MVCApp.Models.ViewModels.GetMoviesViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -7,32 +7,32 @@
 <h2>Details</h2>
 
 <div>
-    <h4>@Model.Title</h4>
+    <h4>@Model.Movie.Title</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Genres.Name)
+            @Html.DisplayNameFor(model => model.Movie.Genres.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Genres.Name)
+            @Html.DisplayFor(model => model.Movie.Genres.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateAdded)
+            @Html.DisplayNameFor(model => model.Movie.DateAdded)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateAdded)
+            @Html.DisplayFor(model => model.Movie.DateAdded)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseDate)
+            @Html.DisplayNameFor(model => model.Movie.ReleaseDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseDate)
+            @Html.DisplayFor(model => model.Movie.ReleaseDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberInStock)
+            @Html.DisplayNameFor(model => model.Movie.NumberInStock)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NumberInStock)
+            @Html.DisplayFor(model => model.Movie.NumberInStock)
         </dd>
     </dl>
 </div>

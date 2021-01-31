@@ -28,7 +28,7 @@ namespace Vidly_MVCApp.Controllers
 
         public IActionResult GetCustomers()
         {
-            var viewModel = new GetCustomersViewModel(_customerData, _mapper);
+            var viewModel = new GetCustomersViewModel(_customerData, _membershipTypeData, _mapper);
             viewModel.LoadCustomers();
 
             return View(viewModel.Customers.ToList());
@@ -38,10 +38,10 @@ namespace Vidly_MVCApp.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            var viewModel = new GetCustomersViewModel(_customerData, _mapper);
+            var viewModel = new CustomerDisplayViewModel(_customerData, _mapper);
             viewModel.GetCostumerById(id);
 
             var customer = viewModel.Customer;
@@ -57,9 +57,11 @@ namespace Vidly_MVCApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var viewModel = new LoadMembershipTypesViewModel(_membershipTypeData, _mapper);
-
-            viewModel.LoadCustomerWithMembershipTypes();
+            var viewModel = new CustomerFormViewModel(_membershipTypeData, _customerData, _mapper)
+            {
+                Customer = new CustomerDto()
+            };
+            viewModel.LoadMembershipTypes();
 
             return View(viewModel);
         }
@@ -70,11 +72,11 @@ namespace Vidly_MVCApp.Controllers
         {
             if(!ModelState.IsValid)
             {
-                var viewModel = new LoadMembershipTypesViewModel(_membershipTypeData, _mapper)
+                var viewModel = new CustomerFormViewModel(_membershipTypeData, _customerData, _mapper)
                 {
                     Customer = customer
                 };
-                viewModel.LoadCustomerWithMembershipTypes();
+                viewModel.LoadMembershipTypes();
                 return View(viewModel);
             }
 
@@ -84,25 +86,37 @@ namespace Vidly_MVCApp.Controllers
             return RedirectToAction(nameof(GetCustomers));
         }
 
-      
-        public IActionResult Edit(int id)
+        [HttpGet]      
+        public IActionResult Edit(int? id)
         {
-            return View();
-        }
+            if (id == null)
+            {
+                return BadRequest();
+            }
 
+            var viewModel = new CustomerFormViewModel(_membershipTypeData, _customerData, _mapper);           
+            viewModel.EditCustomer(id);
+
+            if(viewModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(viewModel);
+        }
     
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(CustomerDto customer)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+               return View(customer);
             }
-            catch
-            {
-                return View();
-            }
+
+            var viewModel = new SaveCustomerViewModel(_customerData, _mapper);
+            viewModel.SaveCustomerEdits(customer);
+            return RedirectToAction(nameof(GetCustomers));
         }
 
         public IActionResult Delete(int id)

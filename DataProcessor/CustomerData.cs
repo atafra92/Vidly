@@ -17,9 +17,9 @@ namespace DataProcessor
         }
         public IEnumerable<Customer> GetAll()
         {
-            var Customers = _context.Customers.Include(c => c.MembershipTypes).ToList();
+            var customers = _context.Customers.Include(c => c.MembershipTypes).ToList();
 
-            return Customers;
+            return customers;
 
         }
         public Customer GetCustomerById(int? id)
@@ -36,7 +36,20 @@ namespace DataProcessor
         {
             _context.Add(customer);
             _context.SaveChanges();
+        }
 
+        public Customer EditCustomerById(int? id)
+        {          
+            var customer = _context.Customers
+                .SingleOrDefault(c => c.Id == id);    
+            
+            return customer;
+        }
+
+        public void SaveEdits(Customer customer)
+        {
+            _context.Entry(customer).State = EntityState.Modified;
+            _context.SaveChanges();
         }
     }
 }

@@ -25,7 +25,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a asp-area="" asp-controller="Customer" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+                <a asp-area="" asp-controller="Customer" asp-action="Edit" asp-route-id="@item.Id">@item.Name</a>
             </td>
             <td>
                 @item.MembershipTypes.Name

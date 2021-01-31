@@ -1,18 +1,18 @@
 ﻿@model Vidly_MVCApp.Models.ViewModels.CustomerFormViewModel
-@*@model Vidly_MVCApp.Models.CustomerDto*@
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
-<h4>Customer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Customer.Id" />
+
             <div class="form-group">
                 <label asp-for="Customer.Name" class="control-label"></label>
                 <input asp-for="Customer.Name" class="form-control" />
@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Customer.BirthDate" class="control-label"></label>
-                <input asp-for="Customer.BirthDate" type="date" class="form-control" />
+                <input asp-for="Customer.BirthDate" type="date" asp-format="{0:yyyy-MM-dd}" class="form-control" />
                 <span asp-validation-for="Customer.BirthDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -32,8 +32,9 @@
                     <input class="form-check-input" asp-for="Customer.IsSubsribedToNewsLetter" /> @Html.DisplayNameFor(model => model.Customer.IsSubsribedToNewsLetter)
                 </label>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

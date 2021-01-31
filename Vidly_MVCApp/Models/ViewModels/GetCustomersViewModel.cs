@@ -9,31 +9,32 @@ namespace Vidly_MVCApp.Models.ViewModels
 {
     public class GetCustomersViewModel
     {
-        private readonly ICustomerData _costumerEndpoints;
+        private readonly ICustomerData _customerData;
+        private readonly IMembershipTypeData _membershipData;
         private readonly IMapper _mapper;
 
-        public GetCustomersViewModel(ICustomerData costumerEndpoints, IMapper mapper)
-        {
-            _costumerEndpoints = costumerEndpoints;
+        public GetCustomersViewModel(ICustomerData customerData, IMembershipTypeData membershipData, IMapper mapper)
+        {   
+            _customerData = customerData;
+            _membershipData = membershipData;
             _mapper = mapper;
         }
         public void LoadCustomers()
         {
-            var customersList = _costumerEndpoints.GetAll();
+            var customersList = _customerData.GetAll();
             var customers = _mapper.Map<List<CustomerDto>>(customersList);
-
             Customers = customers;
-
         }
-        public void GetCostumerById(int? id)
-        {
-            var costumerbyId = _costumerEndpoints.GetCustomerById(id);
-            var customer = _mapper.Map<CustomerDto>(costumerbyId);
 
-            Customer = customer;
+        public void LoadMembershipTypes()
+        {
+            var membershipTypesList = _membershipData.GetAll();
+            var membershipTypes = _mapper.Map<List<MembershipTypeDto>>(membershipTypesList);
+            MembershipTypes = new List<MembershipTypeDto>(membershipTypes);
         }
 
         public IEnumerable<CustomerDto> Customers { get; set; }
-        public CustomerDto Customer { get; set; }
+        public IEnumerable<MembershipTypeDto> MembershipTypes { get; set; }
+
     }
 }

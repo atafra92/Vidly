@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataProcessor.Models.Movie>
+﻿@model IEnumerable<Vidly_MVCApp.Models.MovieDto>
 
 @{
     ViewData["Title"] = "GetMovies";
@@ -7,7 +7,8 @@
 <h1>List of Movies</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @Html.ActionLink("New Movie", "Create", "Movie", null, new { @class = "btn btn-primary" })
+    @*<a asp-action="Create" class="btn btn-primary">Create New</a>*@
 </p>
 
 <table class="table">
@@ -33,7 +34,7 @@
             {
                 <tr>
                     <td>
-                        <a asp-area="" asp-controller="Movie" asp-action="Details" asp-route-id="@item.Id">@item.Title</a>
+                        <a asp-area="" asp-controller="Movie" asp-action="Edit" asp-route-id="@item.Id">@item.Title</a>
                     </td>
                     <td>
                         @item.Genres.Name
