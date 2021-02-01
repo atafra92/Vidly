@@ -36,7 +36,8 @@ namespace Vidly_MVCApp.Models.ViewModels
             Movie = movie;
         }
 
-        public IEnumerable<GenreDto> Genres { get; set; }
         public MovieDto Movie { get; set; }
+        public IEnumerable<GenreDto> Genres { get; set; }
+        
     }
 }

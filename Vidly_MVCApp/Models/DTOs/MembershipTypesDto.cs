@@ -21,5 +21,9 @@ namespace Vidly_MVCApp.Models
 
         [Display(Name = "Discount Rate")]
         public byte DiscountRate { get; set; }
+
+        public static readonly byte Unknown = 0;
+        public static readonly byte PayAsYouGo = 1;
+
     }
 }

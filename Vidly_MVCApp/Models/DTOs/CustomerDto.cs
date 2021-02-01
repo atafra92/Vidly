@@ -10,6 +10,7 @@ namespace Vidly_MVCApp.Models
     {
         public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         [Display(Name = "Is subscribed to newsletter")]
@@ -18,12 +19,13 @@ namespace Vidly_MVCApp.Models
         [Display(Name = "Date of Birth")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [Min18YearsIfAMember]
         public DateTime? BirthDate { get; set; }
 
         //navigation property
         public MembershipTypeDto MembershipTypes { get; set; }
 
         [Display(Name = "Membership Type")]
-        public int MembershipTypeId { get; set; }
+        public byte MembershipTypeId { get; set; }
     }
 }

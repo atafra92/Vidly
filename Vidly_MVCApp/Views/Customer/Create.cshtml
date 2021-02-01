@@ -5,27 +5,29 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>New Customer</h1>
 
-<h4>Customer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Customer.Id" />
+
             <div class="form-group">
                 <label asp-for="Customer.Name" class="control-label"></label>
                 <input asp-for="Customer.Name" class="form-control" />
                 <span asp-validation-for="Customer.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Customer.MembershipTypeId" class="control-label"></label>
+                <select asp-for="Customer.MembershipTypeId" class="form-control" asp-items="@(new SelectList(Model.MembershipTypes,"Id","Name"))"><option>Please select</option> </select>
+                <span asp-validation-for="Customer.MembershipTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Customer.BirthDate" class="control-label"></label>
                 <input asp-for="Customer.BirthDate" type="date" class="form-control" />
                 <span asp-validation-for="Customer.BirthDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Customer.MembershipTypeId" class="control-label"></label>
-                <select asp-for="Customer.MembershipTypeId" class="form-control" asp-items="@(new SelectList(Model.MembershipTypes,"Id","Name"))"><option>Please select</option> </select>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -42,4 +44,6 @@
 <div>
     <a asp-action="GetCustomers">Back to List</a>
 </div>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 

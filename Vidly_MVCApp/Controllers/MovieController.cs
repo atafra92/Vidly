@@ -39,7 +39,7 @@ namespace Vidly_MVCApp.Controllers
                 return BadRequest();
             }
 
-            var viewModel = new GetMoviesViewModel(_movieData, _mapper);
+            var viewModel = new MovieDisplayViewModel(_movieData, _mapper);
             viewModel.GetMovieById(id);
 
             var movie = viewModel.Movie;

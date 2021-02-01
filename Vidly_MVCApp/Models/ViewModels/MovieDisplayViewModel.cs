@@ -7,25 +7,24 @@ using System.Threading.Tasks;
 
 namespace Vidly_MVCApp.Models.ViewModels
 {
-    public class GetMoviesViewModel
+    public class MovieDisplayViewModel
     {
         private readonly IMovieData _movieData;
         private readonly IMapper _mapper;
 
-        public GetMoviesViewModel(IMovieData movieData, IMapper mapper)
+        public MovieDisplayViewModel(IMovieData movieData, IMapper mapper)
         {
             _movieData = movieData;
             _mapper = mapper;
         }
-
-        public void LoadMovies()
+        public void GetMovieById(int? id)
         {
-            var moviesList = _movieData.GetAll();
-            var movies = _mapper.Map<List<MovieDto>>(moviesList);
+            var movieById = _movieData.GetMovieById(id);
+            var movie = _mapper.Map<MovieDto>(movieById);
 
-            Movies = movies;
+            Movie = movie;
         }
 
-        public IEnumerable<MovieDto> Movies { get; set; }
+        public MovieDto Movie { get; set; }
     }
 }
