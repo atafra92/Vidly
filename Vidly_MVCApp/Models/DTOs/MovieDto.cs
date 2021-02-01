@@ -11,7 +11,7 @@ namespace Vidly_MVCApp.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(5, ErrorMessage = "Name can not be longer than 5 chars")]
+        [StringLength(100)]
         public string Title { get; set; }
 
         [Required]
@@ -35,6 +35,6 @@ namespace Vidly_MVCApp.Models
 
         [Required]
         [Display(Name = "Genre")]
-        public int GenreId { get; set; }
+        public byte GenreId { get; set; }
     }
 }

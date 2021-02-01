@@ -10,5 +10,6 @@ namespace DataProcessor
         void CreateNew(Customer customer);
         Customer EditCustomerById(int? id);
         void SaveEdits(Customer customer);
+        List<MembershipType> GetAllMembershipTypes();
     }
 }

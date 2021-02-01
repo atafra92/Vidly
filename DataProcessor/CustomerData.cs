@@ -51,5 +51,10 @@ namespace DataProcessor
             _context.Entry(customer).State = EntityState.Modified;
             _context.SaveChanges();
         }
+
+        public List<MembershipType> GetAllMembershipTypes()
+        {
+            return _context.MembershipTypes.ToList();
+        }
     }
 }

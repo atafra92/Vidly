@@ -16,19 +16,17 @@ namespace Vidly_MVCApp.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerData _customerData;
-        private readonly IMembershipTypeData _membershipTypeData;
         private readonly IMapper _mapper;
 
-        public CustomerController(ICustomerData customerData, IMembershipTypeData membershipTypeData, IMapper mapper)
+        public CustomerController(ICustomerData customerData, IMapper mapper)
         {
             _customerData = customerData;
-            _membershipTypeData = membershipTypeData;
             _mapper = mapper;
         }
 
         public IActionResult GetCustomers()
         {
-            var viewModel = new GetCustomersViewModel(_customerData, _membershipTypeData, _mapper);
+            var viewModel = new GetCustomersViewModel(_customerData, _mapper);
             viewModel.LoadCustomers();
 
             return View(viewModel.Customers.ToList());
@@ -57,12 +55,12 @@ namespace Vidly_MVCApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var viewModel = new CustomerFormViewModel(_membershipTypeData, _customerData, _mapper)
+            var viewModel = new CustomerFormViewModel(_customerData, _mapper)
             {
                 Customer = new CustomerDto()
             };
-            viewModel.LoadMembershipTypes();
 
+            viewModel.LoadMembershipTypes();
             return View(viewModel);
         }
 
@@ -72,7 +70,7 @@ namespace Vidly_MVCApp.Controllers
         {
             if(!ModelState.IsValid)
             {
-                var viewModel = new CustomerFormViewModel(_membershipTypeData, _customerData, _mapper)
+                var viewModel = new CustomerFormViewModel(_customerData, _mapper)
                 {
                     Customer = customer
                 };
@@ -80,8 +78,8 @@ namespace Vidly_MVCApp.Controllers
                 return View(viewModel);
             }
 
-            var saveCustomer = new SaveCustomerViewModel(_customerData, _mapper);
-            saveCustomer.SaveCustomer(customer);
+            var saveToDb = new CustomerFormViewModel(_customerData, _mapper);
+            saveToDb.SaveCustomer(customer);
 
             return RedirectToAction(nameof(GetCustomers));
         }
@@ -94,7 +92,7 @@ namespace Vidly_MVCApp.Controllers
                 return BadRequest();
             }
 
-            var viewModel = new CustomerFormViewModel(_membershipTypeData, _customerData, _mapper);           
+            var viewModel = new CustomerFormViewModel(_customerData, _mapper);           
             viewModel.EditCustomer(id);
 
             if(viewModel == null)
@@ -114,7 +112,7 @@ namespace Vidly_MVCApp.Controllers
                return View(customer);
             }
 
-            var viewModel = new SaveCustomerViewModel(_customerData, _mapper);
+            var viewModel = new CustomerFormViewModel(_customerData, _mapper);
             viewModel.SaveCustomerEdits(customer);
             return RedirectToAction(nameof(GetCustomers));
         }

@@ -7,7 +7,7 @@
 <h1>List of Customers</h1>
 
 <p>
-    <a asp-action="Create">Create Customer</a>
+    @Html.ActionLink("New Customer", "Create", "Customer", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <thead>

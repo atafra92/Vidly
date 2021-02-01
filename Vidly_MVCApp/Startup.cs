@@ -47,8 +47,6 @@ namespace Vidly_MVCApp
             //personal services
             services.AddTransient<ICustomerData, CustomerData>();
             services.AddTransient<IMovieData, MovieData>();
-            services.AddTransient<IMembershipTypeData, MembershipTypeData>();
-            services.AddTransient<IGenresData, GenresData>();
 
             //configuring Automapper
             var mapperConfig = new MapperConfiguration(mc =>

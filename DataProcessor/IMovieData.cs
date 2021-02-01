@@ -10,5 +10,6 @@ namespace DataProcessor
         List<Movie> GetAll();
         Movie GetMovieById(int? id);
         void SaveEdits(Movie movie);
+        List<Genre> GetAllGenres();
     }
 }

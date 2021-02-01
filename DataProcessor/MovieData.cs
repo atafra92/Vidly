@@ -51,5 +51,10 @@ namespace DataProcessor
             _context.Entry(movie).State = EntityState.Modified;
             _context.SaveChanges();
         }
+
+        public List<Genre> GetAllGenres()
+        {
+            return _context.Genres.ToList();
+        }
     }
 }

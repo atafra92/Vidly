@@ -13,13 +13,11 @@ namespace Vidly_MVCApp.Controllers
     public class MovieController : Controller
     {
         private readonly IMovieData _movieData;
-        private readonly IGenresData _genresData;
         private readonly IMapper _mapper;
 
-        public MovieController(IMovieData movieData, IGenresData genresData, IMapper mapper)
+        public MovieController(IMovieData movieData, IMapper mapper)
         {
             _movieData = movieData;
-            _genresData = genresData;
             _mapper = mapper;
         }
 
@@ -55,13 +53,12 @@ namespace Vidly_MVCApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var viewModel = new MovieFormViewModel(_movieData, _genresData, _mapper)
+            var viewModel = new MovieFormViewModel(_movieData, _mapper)
             {
                 Movie = new MovieDto()
             };
 
             viewModel.LoadGenres();
-
             return View(viewModel);
         }
 
@@ -71,7 +68,7 @@ namespace Vidly_MVCApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = new MovieFormViewModel(_movieData, _genresData, _mapper)
+                var viewModel = new MovieFormViewModel(_movieData, _mapper)
                 {
                     Movie = movie
                 };
@@ -79,9 +76,8 @@ namespace Vidly_MVCApp.Controllers
                 return View(viewModel);
             }
 
-            var saveMovie = new SaveMovieViewModel(_movieData, _mapper);
-            saveMovie.SaveMovie(movie);
-
+            var saveToDb = new MovieFormViewModel(_movieData, _mapper);
+            saveToDb.SaveMovie(movie);
             return RedirectToAction(nameof(GetMovies));
         }
 
@@ -93,7 +89,7 @@ namespace Vidly_MVCApp.Controllers
                 return BadRequest();
             }
 
-            var viewModel = new MovieFormViewModel(_movieData, _genresData, _mapper);
+            var viewModel = new MovieFormViewModel(_movieData, _mapper);
             viewModel.EditMovie(id);
 
             if (viewModel == null)
@@ -113,7 +109,7 @@ namespace Vidly_MVCApp.Controllers
                 return View(movie);
             }
 
-            var viewModel = new SaveMovieViewModel(_movieData, _mapper);
+            var viewModel = new MovieFormViewModel(_movieData, _mapper);
             viewModel.SaveMovieEdits(movie);
             return RedirectToAction(nameof(GetMovies));
         }
