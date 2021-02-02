@@ -44,7 +44,7 @@ namespace Vidly_MVCApp.Models.ViewModels
         public void SaveCustomerEdits(CustomerDto customerDto)
         {
             var customerToEdit = _mapper.Map<Customer>(customerDto);
-            _customerData.SaveEdits(customerToEdit);
+            _customerData.SaveEditsMVC(customerToEdit);
         }
 
         public CustomerDto Customer { get; set; }

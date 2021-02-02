@@ -9,7 +9,10 @@ namespace DataProcessor
         Movie EditMovieById(int? id);
         List<Movie> GetAll();
         Movie GetMovieById(int? id);
-        void SaveEdits(Movie movie);
+        void SaveEditsMVC(Movie movie);
+        void SaveEditsAPI();
+        void DeleteMovie(Movie movie);
         List<Genre> GetAllGenres();
+
     }
 }

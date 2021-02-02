@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Vidly_MVCApp.Controllers.API;
 using Vidly_MVCApp.Data;
 using Vidly_MVCApp.Mappings;
 
@@ -48,16 +49,19 @@ namespace Vidly_MVCApp
             services.AddTransient<ICustomerData, CustomerData>();
             services.AddTransient<IMovieData, MovieData>();
 
+            //add services for IApiHelper interface
+            services.AddScoped(typeof(IApiHelper<>), typeof(CustomerAPI<>));
+            services.AddScoped(typeof(IApiHelper<>), typeof(MovieAPI<>));
+
             //configuring Automapper
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
             });
-
             IMapper mapper = mapperConfig.CreateMapper();
-
             services.AddSingleton(mapper);
 
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,16 +82,18 @@ namespace Vidly_MVCApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

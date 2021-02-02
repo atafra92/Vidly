@@ -1,4 +1,5 @@
-﻿using DataProcessor.DataAccess;
+﻿using AutoMapper;
+using DataProcessor.DataAccess;
 using DataProcessor.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,6 +12,7 @@ namespace DataProcessor
     public class CustomerData : ICustomerData
     {
         private VidlyDbContext _context;
+
         public CustomerData(VidlyDbContext context)
         {
             _context = context;
@@ -34,7 +36,7 @@ namespace DataProcessor
 
         public void CreateNew(Customer customer)    
         {
-            _context.Add(customer);
+            _context.Customers.Add(customer);
             _context.SaveChanges();
         }
 
@@ -46,9 +48,20 @@ namespace DataProcessor
             return customer;
         }
 
-        public void SaveEdits(Customer customer)
+        public void SaveEditsAPI()
+        {
+            _context.SaveChanges();   
+        }
+
+        public void SaveEditsMVC(Customer customer)
         {
             _context.Entry(customer).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void DeleteCustomer(Customer customer)
+        {
+            _context.Customers.Remove(customer);
             _context.SaveChanges();
         }
 

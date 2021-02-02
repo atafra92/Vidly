@@ -9,7 +9,9 @@ namespace DataProcessor
         Customer GetCustomerById(int? id);
         void CreateNew(Customer customer);
         Customer EditCustomerById(int? id);
-        void SaveEdits(Customer customer);
+        void SaveEditsMVC(Customer customer);
         List<MembershipType> GetAllMembershipTypes();
+        void SaveEditsAPI();
+        void DeleteCustomer(Customer customer);
     }
 }

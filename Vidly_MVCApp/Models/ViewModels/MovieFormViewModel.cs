@@ -44,7 +44,7 @@ namespace Vidly_MVCApp.Models.ViewModels
         public void SaveMovieEdits(MovieDto movieDto)
         {
             var movieToEdit = _mapper.Map<Movie>(movieDto);
-            _movieData.SaveEdits(movieToEdit);
+            _movieData.SaveEditsMVC(movieToEdit);
         }
 
         public MovieDto Movie { get; set; }

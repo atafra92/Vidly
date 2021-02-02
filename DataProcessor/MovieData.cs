@@ -31,7 +31,6 @@ namespace DataProcessor
 
             return movie;
         }
-
         public void CreateNew(Movie movie)
         {
             _context.Add(movie);
@@ -46,9 +45,20 @@ namespace DataProcessor
             return movie;
         }
 
-        public void SaveEdits(Movie movie)
+        public void SaveEditsMVC(Movie movie)
         {
             _context.Entry(movie).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void SaveEditsAPI()
+        {
+            _context.SaveChanges();
+        }
+
+        public void DeleteMovie(Movie movie)
+        {
+            _context.Movies.Remove(movie);
             _context.SaveChanges();
         }
 
