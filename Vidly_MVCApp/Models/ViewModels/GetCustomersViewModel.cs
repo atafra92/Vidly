@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataProcessor;
+using DataProcessor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace Vidly_MVCApp.Models.ViewModels
 {
     public class GetCustomersViewModel
     {
-        private readonly ICustomerData _customerData;
+        private readonly IEntityData<Customer, MembershipType> _customerData;
         private readonly IMapper _mapper;
 
-        public GetCustomersViewModel(ICustomerData customerData, IMapper mapper)
+        public GetCustomersViewModel(IEntityData<Customer, MembershipType> customerData, IMapper mapper)
         {
             _customerData = customerData;
             _mapper = mapper;

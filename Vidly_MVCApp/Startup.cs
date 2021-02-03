@@ -1,6 +1,7 @@
 using AutoMapper;
 using DataProcessor;
 using DataProcessor.DataAccess;
+using DataProcessor.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,6 +18,7 @@ using System.Threading.Tasks;
 using Vidly_MVCApp.Controllers.API;
 using Vidly_MVCApp.Data;
 using Vidly_MVCApp.Mappings;
+using Vidly_MVCApp.Models;
 
 namespace Vidly_MVCApp
 {
@@ -45,13 +47,13 @@ namespace Vidly_MVCApp
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            //personal services
-            services.AddTransient<ICustomerData, CustomerData>();
-            services.AddTransient<IMovieData, MovieData>();
-
+            //personal services 
+            services.AddScoped(typeof(IEntityData<Customer, MembershipType>), typeof(CustomerData));          
+            services.AddScoped(typeof(IEntityData<Movie, Genre>), typeof(MovieData));
+                    
             //add services for IApiHelper interface
-            services.AddScoped(typeof(IApiHelper<>), typeof(CustomerAPI<>));
-            services.AddScoped(typeof(IApiHelper<>), typeof(MovieAPI<>));
+            services.AddScoped(typeof(IApiHelper<CustomerDto>), typeof(CustomerAPI));
+            services.AddScoped(typeof(IApiHelper<MovieDto>), typeof(MovieAPI));
 
             //configuring Automapper
             var mapperConfig = new MapperConfiguration(mc =>

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace DataProcessor
 {
-    public class CustomerData : ICustomerData
+    public class CustomerData : IEntityData<Customer,MembershipType>                                                                        
     {
         private VidlyDbContext _context;
 
@@ -24,7 +24,7 @@ namespace DataProcessor
             return customers;
 
         }
-        public Customer GetCustomerById(int? id)
+        public Customer GetById(int? id)
         {
             var customer = _context.Customers
                 .Include(c => c.MembershipTypes)
@@ -40,7 +40,7 @@ namespace DataProcessor
             _context.SaveChanges();
         }
 
-        public Customer EditCustomerById(int? id)
+        public Customer EditById(int? id)
         {          
             var customer = _context.Customers
                 .SingleOrDefault(c => c.Id == id);    
@@ -59,15 +59,16 @@ namespace DataProcessor
             _context.SaveChanges();
         }
 
-        public void DeleteCustomer(Customer customer)
+        public void DeleteEntity(Customer customer)
         {
             _context.Customers.Remove(customer);
             _context.SaveChanges();
         }
 
-        public List<MembershipType> GetAllMembershipTypes()
+        public List<MembershipType> GetNavProperty()
         {
             return _context.MembershipTypes.ToList();
         }
+
     }
 }

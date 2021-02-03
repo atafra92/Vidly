@@ -1,4 +1,5 @@
 ﻿using DataProcessor;
+using DataProcessor.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,10 +14,11 @@ namespace Vidly_MVCApp.Controllers.API
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        private readonly IMovieData _movieData;
+        private readonly IEntityData<Movie, Genre> _movieData;
         private readonly IApiHelper<MovieDto> _apiHelper;
 
-        public MoviesController(IMovieData movieData, IApiHelper<MovieDto> apiHelper)
+        
+        public MoviesController(IEntityData<Movie, Genre> movieData, IApiHelper<MovieDto> apiHelper)
         {
             _movieData = movieData;
             _apiHelper = apiHelper;
@@ -67,7 +69,7 @@ namespace Vidly_MVCApp.Controllers.API
                 NotFound();
             }
 
-            var movieInDb = _movieData.EditMovieById(id);
+            var movieInDb = _movieData.EditById(id);
 
             if (movieInDb == null)
             {
@@ -83,7 +85,7 @@ namespace Vidly_MVCApp.Controllers.API
         [HttpDelete("{id}")]
         public IActionResult DeleteMovie(int id)
         {
-            var movieInDb = _movieData.EditMovieById(id);
+            var movieInDb = _movieData.EditById(id);
 
             if (movieInDb == null)
             {

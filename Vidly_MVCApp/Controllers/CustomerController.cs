@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataProcessor;
 using DataProcessor.DataAccess;
+using DataProcessor.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,10 @@ namespace Vidly_MVCApp.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ICustomerData _customerData;
+        private readonly IEntityData<Customer, MembershipType> _customerData;
         private readonly IMapper _mapper;
 
-        public CustomerController(ICustomerData customerData, IMapper mapper)
+        public CustomerController(IEntityData<Customer, MembershipType> customerData, IMapper mapper)
         {
             _customerData = customerData;
             _mapper = mapper;

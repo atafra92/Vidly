@@ -8,21 +8,21 @@ using System.Text;
 
 namespace DataProcessor
 {
-    public class MovieData : IMovieData
+    public class MovieData : IEntityData<Movie, Genre> 
     {
         private VidlyDbContext _context;
         public MovieData(VidlyDbContext context)
         {
             _context = context;
         }
-        public List<Movie> GetAll()
+        public IEnumerable<Movie> GetAll()
         {
             var movies = _context.Movies.Include(c => c.Genres).ToList();
 
             return movies;
         }
 
-        public Movie GetMovieById(int? id)
+        public Movie GetById(int? id)
         {
             var movie = _context.Movies
                 .Include(m => m.Genres)
@@ -37,7 +37,7 @@ namespace DataProcessor
             _context.SaveChanges();
         }
 
-        public Movie EditMovieById(int? id)
+        public Movie EditById(int? id)
         {
             var movie = _context.Movies
                 .SingleOrDefault(m => m.Id == id);
@@ -56,13 +56,13 @@ namespace DataProcessor
             _context.SaveChanges();
         }
 
-        public void DeleteMovie(Movie movie)
+        public void DeleteEntity(Movie movie)
         {
             _context.Movies.Remove(movie);
             _context.SaveChanges();
         }
 
-        public List<Genre> GetAllGenres()
+        public List<Genre> GetNavProperty()
         {
             return _context.Genres.ToList();
         }

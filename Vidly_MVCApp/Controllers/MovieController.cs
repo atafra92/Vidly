@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataProcessor;
+using DataProcessor.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,10 @@ namespace Vidly_MVCApp.Controllers
 {
     public class MovieController : Controller
     {
-        private readonly IMovieData _movieData;
+        private readonly IEntityData<Movie, Genre> _movieData;
         private readonly IMapper _mapper;
 
-        public MovieController(IMovieData movieData, IMapper mapper)
+        public MovieController(IEntityData<Movie, Genre> movieData, IMapper mapper)
         {
             _movieData = movieData;
             _mapper = mapper;

@@ -9,12 +9,12 @@ using Vidly_MVCApp.Models;
 
 namespace Vidly_MVCApp.Controllers.API
 {
-    public class MovieAPI<T> : IApiHelper<MovieDto> where T : class
+    public class MovieAPI : IApiHelper<MovieDto>
     {
-        private readonly IMovieData _movieData;
+        private readonly IEntityData<Movie, Genre> _movieData;
         private readonly IMapper _mapper;
 
-        public MovieAPI(IMovieData movieData, IMapper mapper)
+        public MovieAPI(IEntityData<Movie, Genre> movieData, IMapper mapper)
         {
             _movieData = movieData;
             _mapper = mapper;
@@ -30,7 +30,7 @@ namespace Vidly_MVCApp.Controllers.API
 
         public MovieDto GetEntity(int id)
         {
-            var movieById = _movieData.GetMovieById(id);
+            var movieById = _movieData.GetById(id);
             var movie = _mapper.Map<MovieDto>(movieById);
 
             return movie;
@@ -47,7 +47,7 @@ namespace Vidly_MVCApp.Controllers.API
 
         public void UpdateEntity(int id, MovieDto movieDto)
         {
-            var movieInDb = _movieData.EditMovieById(id);
+            var movieInDb = _movieData.EditById(id);
 
             _mapper.Map(movieDto, movieInDb);
 
@@ -56,8 +56,8 @@ namespace Vidly_MVCApp.Controllers.API
 
         public void DeleteEntity(int id)
         {
-            var movieToDelete = _movieData.EditMovieById(id);
-            _movieData.DeleteMovie(movieToDelete);
+            var movieToDelete = _movieData.EditById(id);
+            _movieData.DeleteEntity(movieToDelete);
         }
     }
 }

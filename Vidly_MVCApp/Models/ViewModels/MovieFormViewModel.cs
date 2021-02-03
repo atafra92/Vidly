@@ -10,10 +10,10 @@ namespace Vidly_MVCApp.Models.ViewModels
 {
     public class MovieFormViewModel
     {
-        private readonly IMovieData _movieData;
+        private readonly IEntityData<Movie, Genre> _movieData;
         private readonly IMapper _mapper;
 
-        public MovieFormViewModel(IMovieData movieData, IMapper mapper)
+        public MovieFormViewModel(IEntityData<Movie, Genre> movieData, IMapper mapper)
         {
             _movieData = movieData;
             _mapper = mapper;
@@ -21,7 +21,7 @@ namespace Vidly_MVCApp.Models.ViewModels
 
         public void LoadGenres()
         {
-            var genresList = _movieData.GetAllGenres();
+            var genresList = _movieData.GetNavProperty();
             var genres = _mapper.Map<List<GenreDto>>(genresList);
             Genres = new List<GenreDto>(genres);
         }
@@ -30,7 +30,7 @@ namespace Vidly_MVCApp.Models.ViewModels
         {
             LoadGenres();
 
-            var movieEdit = _movieData.EditMovieById(id);
+            var movieEdit = _movieData.EditById(id);
             var movie = _mapper.Map<MovieDto>(movieEdit);
             Movie = movie;
         }

@@ -9,12 +9,12 @@ using Vidly_MVCApp.Models;
 
 namespace Vidly_MVCApp.Controllers.API
 {
-    public class CustomerAPI<T> : IApiHelper<CustomerDto> where T : class
+    public class CustomerAPI : IApiHelper<CustomerDto>
     {
-        private readonly ICustomerData _customerData;
+        private readonly IEntityData<Customer, MembershipType> _customerData;
         private readonly IMapper _mapper;
 
-        public CustomerAPI(ICustomerData customerData, IMapper mapper)
+        public CustomerAPI(IEntityData<Customer, MembershipType> customerData, IMapper mapper)
         {
             _customerData = customerData;
             _mapper = mapper;
@@ -30,7 +30,7 @@ namespace Vidly_MVCApp.Controllers.API
 
         public CustomerDto GetEntity(int id)
         {
-            var customerById = _customerData.GetCustomerById(id);
+            var customerById = _customerData.GetById(id);
             var customer = _mapper.Map<CustomerDto>(customerById);
 
             return customer;
@@ -48,7 +48,7 @@ namespace Vidly_MVCApp.Controllers.API
 
         public void UpdateEntity(int id, CustomerDto customerDto)
         {
-            var customerInDb =  _customerData.EditCustomerById(id);
+            var customerInDb =  _customerData.EditById(id);
 
             _mapper.Map(customerDto, customerInDb);
 
@@ -57,8 +57,8 @@ namespace Vidly_MVCApp.Controllers.API
 
         public void DeleteEntity(int id)
         {
-           var customerToDelete = _customerData.EditCustomerById(id);
-            _customerData.DeleteCustomer(customerToDelete);
+           var customerToDelete = _customerData.EditById(id);
+            _customerData.DeleteEntity(customerToDelete);
         }
     }
 }

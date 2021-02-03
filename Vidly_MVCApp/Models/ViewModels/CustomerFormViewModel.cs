@@ -10,10 +10,10 @@ namespace Vidly_MVCApp.Models.ViewModels
 {
     public class CustomerFormViewModel
     {
-        private readonly ICustomerData _customerData;
+        private readonly IEntityData<Customer, MembershipType> _customerData;
         private readonly IMapper _mapper;
 
-        public CustomerFormViewModel( ICustomerData customerData, IMapper mapper)
+        public CustomerFormViewModel(IEntityData<Customer, MembershipType> customerData, IMapper mapper)
         {
             _customerData = customerData;
             _mapper = mapper;
@@ -21,7 +21,7 @@ namespace Vidly_MVCApp.Models.ViewModels
 
         public void LoadMembershipTypes()
         {
-            var membershipTypesList = _customerData.GetAllMembershipTypes();
+            var membershipTypesList = _customerData.GetNavProperty();
             var membershipTypes = _mapper.Map<List<MembershipTypeDto>>(membershipTypesList);
             MembershipTypes = new List<MembershipTypeDto>(membershipTypes);
         }
@@ -30,7 +30,7 @@ namespace Vidly_MVCApp.Models.ViewModels
         {          
             LoadMembershipTypes();
 
-            var customerEdit = _customerData.EditCustomerById(id);
+            var customerEdit = _customerData.EditById(id);
             var customer = _mapper.Map<CustomerDto>(customerEdit);
             Customer = customer;
         }

@@ -15,10 +15,10 @@ namespace Vidly_MVCApp.Controllers.API
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly ICustomerData _customerData;
+        private readonly IEntityData<Customer, MembershipType> _customerData;
         private readonly IApiHelper<CustomerDto> _apiHelper;
 
-        public CustomersController(ICustomerData customerData, IApiHelper<CustomerDto> apiHelper)
+        public CustomersController(IEntityData<Customer, MembershipType> customerData, IApiHelper<CustomerDto> apiHelper)
         {
             _customerData = customerData;
             _apiHelper = apiHelper;
@@ -69,7 +69,7 @@ namespace Vidly_MVCApp.Controllers.API
                 NotFound();
             }
 
-            var customerInDb = _customerData.EditCustomerById(id);
+            var customerInDb = _customerData.EditById(id);
 
             if(customerInDb == null)
             {
@@ -85,7 +85,7 @@ namespace Vidly_MVCApp.Controllers.API
         [HttpDelete("{id}")]
         public IActionResult DeleteCustomer(int id)
         {
-            var customerInDb = _customerData.EditCustomerById(id);
+            var customerInDb = _customerData.EditById(id);
 
             if (customerInDb == null)
             {
