@@ -21,30 +21,12 @@
     <tbody></tbody>
 </table>
 
-@*@foreach (var item in Model) {
-            <tr>
-                <td>
-                    <a asp-area="" asp-controller="Customer" asp-action="Edit" asp-route-id="@item.Id">@item.Name</a>
-                </td>
-                <td>
-                    @item.MembershipTypes.Name
-                </td>
-                <td>
-                    <button data-customer-id="@item.Id" class="btn-link js-delete">Delete</button>
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.Id  }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-    }*@
 
 @section scripts
 {
     <script>
         $(document).ready(function () {
-            $("#customers").DataTable({
+            var table = $("#customers").DataTable({
                 ajax: {
                     url: "/api/customers",
                     dataSrc: ""
@@ -57,7 +39,7 @@
                         }
                     },
                     {
-                        data: "name"
+                        data: "membershipTypes.name"
                     },
                     {
                         data: "id",
@@ -75,7 +57,7 @@
                             url: "/api/customers/" + button.attr("data-customer-id"),
                             method: "DELETE",
                             success: function () {
-                                button.parents("tr").remove();
+                                table.row(button.parents("tr")).remove().draw();                              
                             }
                         });
                     }

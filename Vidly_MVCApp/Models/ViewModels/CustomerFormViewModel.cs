@@ -50,5 +50,6 @@ namespace Vidly_MVCApp.Models.ViewModels
         public CustomerDto Customer { get; set; }
         public IEnumerable<MembershipTypeDto> MembershipTypes { get; set; }
 
+        //TO-DO: BILO BI DOBRO NAPRAVITI CACHING DA SE PODATCI DOHVACAJU IZ LISTE A NE BAZE SVAKI PUTA 
     }
 }

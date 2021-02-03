@@ -25,10 +25,7 @@ namespace Vidly_MVCApp.Controllers
         //GET: Movies
         public IActionResult GetMovies()
         {
-            var viewModel = new GetMoviesViewModel(_movieData, _mapper);
-            viewModel.LoadMovies();           
-
-            return View(viewModel.Movies.ToList());
+            return View();
         }
 
         public IActionResult Details(int? id)

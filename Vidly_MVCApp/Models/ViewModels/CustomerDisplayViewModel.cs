@@ -20,8 +20,8 @@ namespace Vidly_MVCApp.Models.ViewModels
         }
         public void GetCostumerById(int? id)
         {
-            var costumerbyId = _customerData.GetById(id);
-            var customer = _mapper.Map<CustomerDto>(costumerbyId);
+            var customerbyId = _customerData.GetById(id);
+            var customer = _mapper.Map<CustomerDto>(customerbyId);
 
             Customer = customer;
         }
