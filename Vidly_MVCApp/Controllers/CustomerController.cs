@@ -27,10 +27,7 @@ namespace Vidly_MVCApp.Controllers
 
         public IActionResult GetCustomers()
         {
-            var viewModel = new GetCustomersViewModel(_customerData, _mapper);
-            viewModel.LoadCustomers();
-
-            return View(viewModel.Customers.ToList());
+            return View();
         }
     
         public IActionResult Details(int? id)
@@ -116,26 +113,6 @@ namespace Vidly_MVCApp.Controllers
             var viewModel = new CustomerFormViewModel(_customerData, _mapper);
             viewModel.SaveCustomerEdits(customer);
             return RedirectToAction(nameof(GetCustomers));
-        }
-
-        public IActionResult Delete(int id)
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

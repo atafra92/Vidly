@@ -5,6 +5,10 @@
     {
       "library": "bootswatch@4.6.0",
       "destination": "wwwroot/lib/bootstrap/dist/css/bootswatch/"
+    },
+    {
+      "library": "datatables@1.10.21",
+      "destination": "wwwroot/lib/datatables/"
     }
   ]
 }
