@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataProcessor;
 using DataProcessor.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using Vidly_MVCApp.Models.ViewModels;
 
 namespace Vidly_MVCApp.Controllers
 {
+    [Authorize]
     public class MovieController : Controller
     {
         private readonly IEntityData<Movie, Genre> _movieData;
