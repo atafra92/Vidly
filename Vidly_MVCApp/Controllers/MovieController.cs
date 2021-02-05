@@ -12,7 +12,7 @@ using Vidly_MVCApp.Models.ViewModels;
 
 namespace Vidly_MVCApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = RoleName.CanManageMovies)]
     public class MovieController : Controller
     {
         private readonly IEntityData<Movie, Genre> _movieData;
@@ -25,9 +25,17 @@ namespace Vidly_MVCApp.Controllers
         }
 
         //GET: Movies
+        [AllowAnonymous]
         public IActionResult GetMovies()
         {
-            return View();
+            if (User.IsInRole(role: RoleName.CanManageMovies))
+            {
+                return View("GetMovies");
+            }
+            else
+            {
+                return View("ReadOnlyList");
+            }
         }
 
         public IActionResult Details(int? id)
@@ -50,7 +58,7 @@ namespace Vidly_MVCApp.Controllers
             return View(viewModel.Movie);
         }
 
-        [HttpGet]
+        [HttpGet]    
         public IActionResult Create()
         {
             var viewModel = new MovieFormViewModel(_movieData, _mapper)

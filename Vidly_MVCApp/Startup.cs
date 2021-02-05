@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using DataProcessor;
 using DataProcessor.DataAccess;
 using DataProcessor.Models;
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Vidly_MVCApp.Areas.Identity;
 using Vidly_MVCApp.Controllers.API;
 using Vidly_MVCApp.Data;
 using Vidly_MVCApp.Mappings;
@@ -42,11 +43,12 @@ namespace Vidly_MVCApp
                 options.UseSqlServer(
                   Configuration.GetConnectionString("VidlyDb")));
 
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-               .AddEntityFrameworkStores<ApplicationDbContext>();
+            //override default IdentityUser options
+            //services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            //   .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -59,7 +61,14 @@ namespace Vidly_MVCApp
             services.AddScoped(typeof(IApiHelper<CustomerDto>), typeof(CustomerAPI));
             services.AddScoped(typeof(IApiHelper<MovieDto>), typeof(MovieAPI));
 
-            //configuring Automapper
+            //add facebook authentication services
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            });
+
+            // Automapper configuration
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());

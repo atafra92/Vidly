@@ -1,5 +1,6 @@
 ﻿using DataProcessor;
 using DataProcessor.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,12 +13,12 @@ namespace Vidly_MVCApp.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = RoleName.CanManageMovies)]
     public class MoviesController : ControllerBase
     {
         private readonly IEntityData<Movie, Genre> _movieData;
         private readonly IApiHelper<MovieDto> _apiHelper;
-
-        
+      
         public MoviesController(IEntityData<Movie, Genre> movieData, IApiHelper<MovieDto> apiHelper)
         {
             _movieData = movieData;
@@ -26,12 +27,13 @@ namespace Vidly_MVCApp.Controllers.API
 
         // GET /api/movies      
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<IEnumerable<MovieDto>> GetMovies()
         {
             //because method returns ActionResult<IEnumerable> we need to call ToList() method
             return _apiHelper.GetEntities().ToList();
         }
-
+            
         //GET /api/movies/1
         [HttpGet("{id}")]
         public ActionResult<MovieDto> GetMovie(int id)
@@ -52,7 +54,7 @@ namespace Vidly_MVCApp.Controllers.API
         {
             if (!ModelState.IsValid)
             {
-                NotFound();
+                BadRequest();
             }
 
             _apiHelper.SaveEntity(movieDto);
@@ -66,7 +68,7 @@ namespace Vidly_MVCApp.Controllers.API
         {
             if (!ModelState.IsValid)
             {
-                NotFound();
+                BadRequest();
             }
 
             var movieInDb = _movieData.EditById(id);
