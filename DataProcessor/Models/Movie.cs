@@ -28,6 +28,6 @@ namespace DataProcessor.Models
 
         public int GenreId { get; set; }
 
-
+        public int NumberAvailable { get; set; }
     }
 }

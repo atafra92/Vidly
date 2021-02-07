@@ -28,10 +28,10 @@ namespace Vidly_MVCApp.Controllers.API
         // GET /api/movies      
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<MovieDto>> GetMovies()
+        public ActionResult<IEnumerable<MovieDto>> GetMovies(string query)
         {
             //because method returns ActionResult<IEnumerable> we need to call ToList() method
-            return _apiHelper.GetEntities().ToList();
+            return _apiHelper.GetEntities(query).ToList();
         }
             
         //GET /api/movies/1

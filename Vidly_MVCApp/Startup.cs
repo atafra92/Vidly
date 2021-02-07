@@ -56,10 +56,13 @@ namespace Vidly_MVCApp
             //personal services 
             services.AddScoped(typeof(IEntityData<Customer, MembershipType>), typeof(CustomerData));          
             services.AddScoped(typeof(IEntityData<Movie, Genre>), typeof(MovieData));
-                    
+
             //add services for IApiHelper interface
             services.AddScoped(typeof(IApiHelper<CustomerDto>), typeof(CustomerAPI));
             services.AddScoped(typeof(IApiHelper<MovieDto>), typeof(MovieAPI));
+
+            services.AddScoped<IRentalsAPI, RentalsAPI>();
+            services.AddScoped<IRentalsData, RentalsData>();
 
             //add facebook authentication services
             services.AddAuthentication().AddFacebook(facebookOptions =>

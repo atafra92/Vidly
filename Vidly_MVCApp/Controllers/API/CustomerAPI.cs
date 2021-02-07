@@ -20,9 +20,9 @@ namespace Vidly_MVCApp.Controllers.API
             _mapper = mapper;
         }
 
-        public IEnumerable<CustomerDto> GetEntities()
+        public IEnumerable<CustomerDto> GetEntities(string query)
         {
-            var customersList = _customerData.GetAll();
+            var customersList = _customerData.GetAll(query);
             var customers = _mapper.Map<List<CustomerDto>>(customersList);
 
             return customers;

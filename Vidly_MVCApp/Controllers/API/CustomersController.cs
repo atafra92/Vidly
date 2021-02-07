@@ -26,10 +26,10 @@ namespace Vidly_MVCApp.Controllers.API
 
         // GET /api/customers      
         [HttpGet]
-        public ActionResult<IEnumerable<CustomerDto>> GetCustomers()
+        public ActionResult<IEnumerable<CustomerDto>> GetCustomers(string query)
         {
             //because method returns ActionResult<IEnumerable> we need to call ToList() method
-            return _apiHelper.GetEntities().ToList();
+            return _apiHelper.GetEntities(query).ToList();
         }
 
         //GET /api/customers/1

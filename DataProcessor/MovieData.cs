@@ -15,11 +15,19 @@ namespace DataProcessor
         {
             _context = context;
         }
-        public IEnumerable<Movie> GetAll()
+        public IEnumerable<Movie> GetAll(string query)
         {
-            var movies = _context.Movies.Include(c => c.Genres).ToList();
+            IQueryable<Movie> moviesQuery = _context.Movies
+                .Include(c => c.Genres)
+                .Where(m => m.NumberAvailable > 0);
 
-            return movies;
+            if(!String.IsNullOrWhiteSpace(query))
+            {
+                moviesQuery = moviesQuery.Where(m => m.Title.Contains(query));
+            }
+
+            return moviesQuery.ToList();
+          
         }
 
         public Movie GetById(int? id)

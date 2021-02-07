@@ -17,11 +17,16 @@ namespace DataProcessor
         {
             _context = context;
         }
-        public IEnumerable<Customer> GetAll()
+        public IEnumerable<Customer> GetAll(string query = null)
         {
-            var customers = _context.Customers.Include(c => c.MembershipTypes).ToList();
+            IQueryable<Customer> customersQuery = _context.Customers.Include(c => c.MembershipTypes);
 
-            return customers;
+            if(!String.IsNullOrWhiteSpace(query))
+            {
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
+            }
+
+            return customersQuery.ToList();
 
         }
         public Customer GetById(int? id)
@@ -70,5 +75,9 @@ namespace DataProcessor
             return _context.MembershipTypes.ToList();
         }
 
+        public IEnumerable<Customer> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

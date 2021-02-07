@@ -4,14 +4,16 @@ using DataProcessor.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataProcessor.Migrations
 {
     [DbContext(typeof(VidlyDbContext))]
-    partial class VidlyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210205204700_AddRentalsTable")]
+    partial class AddRentalsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,9 +101,6 @@ namespace DataProcessor.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("GenreId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberAvailable")
                         .HasColumnType("int");
 
                     b.Property<int>("NumberInStock")

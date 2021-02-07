@@ -20,9 +20,9 @@ namespace Vidly_MVCApp.Controllers.API
             _mapper = mapper;
         }
 
-        public IEnumerable<MovieDto> GetEntities()
+        public IEnumerable<MovieDto> GetEntities(string query)
         {
-            var moviesList = _movieData.GetAll();
+            var moviesList = _movieData.GetAll(query);
             var movies = _mapper.Map<List<MovieDto>>(moviesList);
 
             return movies;

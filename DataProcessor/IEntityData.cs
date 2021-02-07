@@ -5,7 +5,7 @@ namespace DataProcessor
 {
     public interface IEntityData<T,U> where T : class where U : class
     {
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(string query);
         T GetById(int? id);
         void CreateNew(T entity);
         T EditById(int? id);
